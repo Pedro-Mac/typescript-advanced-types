@@ -23,12 +23,26 @@ type Numeric = number | boolean;
 
 type Universal = Combinale & Numeric;
 
-const add = (a: Combinale, b: Combinale) => {
+//Function Overloads => ensures what is the returned value depending on the input types
+function add(a: number, b: number): number;
+function add(a: string, b: string): string;
+function add(a: number, b: string): string;
+function add(a: string, b: number): string;
+function add(a: Combinale, b: Combinale) {
   if (typeof a === 'string' || typeof b === 'string') {
     return a.toString() + b.toString();
   }
   return a + b;
+}
+
+const result = add('Pedro', 'Mac');
+
+const fetchedUserData = {
+  id: 'u1',
+  name: 'Rex',
+  job: { title: 'CEO', description: 'My own company' }
 };
+console.log(fetchedUserData.job.title);
 
 type UnknownEmployee = Employee | Admin;
 
@@ -104,3 +118,15 @@ const moveAnimal = (animal: Animal) => {
 };
 
 moveAnimal({ type: 'bird', flyingSpeed: 100 });
+
+//INDEX TYPES => ALLOWS TO CREATE OBJECTS WHICH ARE MORE FLEXIBLE WITH THE PROPERTIES THEY MIGHT HOLD
+//i.e. To make it reusable with different forms, with different information
+interface ErrorContainer {
+  id: string; // type must be the same as the one in the prop
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  id: 'id1',
+  email: 'Not a valid email'
+};
